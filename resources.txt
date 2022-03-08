@@ -1,4 +1,14 @@
-https://www.ired.team/offensive-security/code-injection-process-injection/process-injection
-https://www.ired.team/offensive-security/code-injection-process-injection/dll-injection
-https://blog.didierstevens.com/2017/09/08/quickpost-dlldemo/
-http://blog.opensecurityresearch.com/2013/01/windows-dll-injection-basics.html
+### Repository
+- https://github.com/stryker2k2/dbg-demo
+
+### Programs
+- https://code.visualstudio.com
+- https://x64dbg.com
+- https://ghidra-sre.org
+- https://mingw-w64.org
+
+### DLL Creation and DLL Injection Resources
+- https://www.ired.team/offensive-security/code-injection-process-injection/process-injection
+- https://www.ired.team/offensive-security/code-injection-process-injection/dll-injection
+- https://blog.didierstevens.com/2017/09/08/quickpost-dlldemo/
+- http://blog.opensecurityresearch.com/2013/01/windows-dll-injection-basics.html
