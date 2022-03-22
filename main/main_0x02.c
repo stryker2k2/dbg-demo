@@ -6,13 +6,23 @@ int main(int argv, char* argc[])
     HANDLE processHandle;
 	PVOID remoteBuffer;
 	wchar_t dllPath[] = (L"Z:\\hello.dll");
+	int result;
+	LPVOID loadLibAddr;
+	LPDWORD lpThreadID;
+	HANDLE hThread;
+	
+	LoadLibraryW(dllPath);
 	
 	processHandle = GetCurrentProcess();
-	remoteBuffer = VirtualAllocEx(processHandle, NULL, sizeof dllPath, MEM_COMMIT, PAGE_READWRITE);	
-	WriteProcessMemory(processHandle, remoteBuffer, (LPVOID)dllPath, sizeof dllPath, NULL);
-	PTHREAD_START_ROUTINE threatStartRoutineAddress = (PTHREAD_START_ROUTINE)GetProcAddress(GetModuleHandle(TEXT("Kernel32")), "LoadLibraryW");
-	CreateRemoteThread(processHandle, NULL, 0, threatStartRoutineAddress, remoteBuffer, 0, NULL);
-	CloseHandle(processHandle); 
+	remoteBuffer = VirtualAllocEx(processHandle, NULL, sizeof dllPath, MEM_COMMIT, PAGE_READWRITE);
+	result = WriteProcessMemory(processHandle, remoteBuffer, (LPVOID)dllPath, sizeof dllPath, NULL);
+	loadLibAddr = (LPVOID)GetProcAddress(GetModuleHandle("kernel32.dll"), "LoadLibraryA");
+	PTHREAD_START_ROUTINE threadStartRoutineAddress = (PTHREAD_START_ROUTINE)GetProcAddress(GetModuleHandle(TEXT("Kernel32")), "LoadLibraryW");
+	hThread = CreateThread(NULL, 0, threadStartRoutineAddress, dllPath, 0, NULL);
+
+	WaitForSingleObject(hThread, INFINITE);
+	CloseHandle(hThread);
+	CloseHandle(processHandle);
 	
 	return 0;
 }

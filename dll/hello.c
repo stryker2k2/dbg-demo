@@ -1,8 +1,9 @@
+#include <stdio.h>
 #include <windows.h>
 
-static DWORD __stdcall HelloMsgBox()
+static DWORD __stdcall HelloMsgBox(char* fdwReason)
 {
-    MessageBox(NULL, "Hello from HelloMsgBox()!", "DemoDll", MB_OK);
+    MessageBox(NULL, fdwReason, "Hello World!", MB_OK);
 }
 
 __declspec(dllexport) 
@@ -12,11 +13,12 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
     {
     case DLL_PROCESS_ATTACH:
         OutputDebugString("DLL_PROCESS_ATTACH");
-        HelloMsgBox();
+        HelloMsgBox("DLL_PROCESS_ATTACH");
         break;
  
     case DLL_THREAD_ATTACH:
         OutputDebugString("DLL_THREAD_ATTACH");
+        HelloMsgBox("DLL_THREAD_ATTACH");
         break;
  
     case DLL_THREAD_DETACH:
